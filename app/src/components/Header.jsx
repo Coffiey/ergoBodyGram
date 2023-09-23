@@ -4,7 +4,7 @@ import "../styles/Header.css";
 const Header = () => {
   return (
     <>
-      <header>
+      <header className="header">
         <h1>ergoBodyGram</h1>
       </header>
     </>

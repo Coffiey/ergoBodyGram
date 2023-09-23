@@ -2,5 +2,8 @@
   height: 200px;
   width: 400px;
   font-size: xx-large;
+  font-weight: bolder;
   border-radius: 10px;
+  background-color: #028579;
+  color: white;
 }

@@ -4,7 +4,7 @@ import "../styles/Footer.css";
 const Footer = () => {
   return (
     <>
-      <footer>
+      <footer className="footer">
         <p>©2023 ergoBodyGram</p>
       </footer>
     </>
