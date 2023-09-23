@@ -4,7 +4,7 @@
   text-align: center;
 }
 
-tr:hover {
+tr:hover td {
   background-color: aquamarine;
 }
 
