@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 require("dotenv").config({ path: "../.env" });
 const express = require("express");
 const app = express();
@@ -7,22 +6,41 @@ const API_KEY = process.env.API_KEY;
 const ORG_ID = process.env.ORG_ID;
 const tokenController = require("./controller/tokenController")
 
-=======
-require("dotenv").config({ path: "./.env" });
-const express = require("express");
-const app = express();
-const PORT = process.env.PORT || 3000;
->>>>>>> 2b098b114db75bdaef12f33bd145e9b67e920d32
 
 
 app.get("/", (req, res) => {
-  res.send("Hello World! test");
+  res.send("Hello World! test");S
 });
 
-<<<<<<< HEAD
 app.get("/api/getToken", tokenController.getOneTimeToken)
 
 
+app.get("/api/get-measurements/:customId", async (req, res) => {
+  const customId = req.params.customId;
+  try {
+    const url = `https://platform.bodygram.com/api/orgs/${process.env.ORG_ID}/scans`;
+      const headers = {
+        'Authorization': process.env.API_KEY,
+      };
+      fetch(url, {
+        headers: headers
+      })
+      .then(data => data.json())
+      .then(result => {
+      const filteredResult = result.results.filter(scan => scan.customScanId === customId);
+      return filteredResult[0].id;
+      })
+      .then(scanId => {
+        fetch(url+"/"+scanId, {
+          headers: headers
+        })
+        .then(data =>data.json())
+        .then(data => res.status(200).send(data.entry.measurements))
+      })
+  } catch(err) {
+    console.log(err)
+  }
+});
 
 app.post("/send-scan-data", (req, res) => {
   const data = req.body.data;
@@ -31,39 +49,16 @@ app.post("/send-scan-data", (req, res) => {
   const headers = {
     'Authorization': process.env.API_KEY,
   };
-=======
-app.post("/send-scan-data", (req, res) => {
-  const data = req.body.data;
-  const url = `https://platform.bodygram.com/api/orgs/${process.env.ORG_ID}/scans`;
-  const headers = {
-      'Authorization': process.env.API_KEY,
-};
-try {
->>>>>>> 2b098b114db75bdaef12f33bd145e9b67e920d32
 
   fetch(url, {
     method: 'POST',
     headers: headers,
     body: JSON.stringify(data),
   })
-<<<<<<< HEAD
   .then(() => {
     
   })
 })
-=======
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })}
-catch(error) {
-    console.error('Request failed:', error);
-  };
-});
-
->>>>>>> 2b098b114db75bdaef12f33bd145e9b67e920d32
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
