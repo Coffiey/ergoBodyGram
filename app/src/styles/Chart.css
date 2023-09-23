@@ -1,0 +1,10 @@
+.dimensions, th, td {
+  padding: 5px;
+  border: 1px solid;
+  text-align: center;
+}
+
+tr:hover {
+  background-color: aquamarine;
+}
+
