@@ -20,7 +20,7 @@ const getOneTimeToken = async (req, res) => {
           const results = await axios.post(fetchUrl, body, {headers});
           const URL = `https://platform.bodygram.com/en/${ORG_ID}/scan?token=${results.data.token}&system=metric`
      console.log(results.data);
-        res.status(200).send(URL);
+        res.status(200).json(URL);
     } catch (err) {
         res.status(500).json("something went wrong");
     }
