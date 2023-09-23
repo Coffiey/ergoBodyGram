@@ -35,7 +35,21 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
           headers: headers
         })
         .then(data =>data.json())
-        .then(data => res.status(200).send(data.entry.measurements))
+        .then(data => {
+          const fullHeight = data.entry.input.photoScan.height;
+          const measurementsArray = data.entry.measurements;
+          const kneeHeight = measurementsArray[16].value;
+          const backneckHeight = measurementsArray[1].value;
+          const shoulderToElbow = measurementsArray[24].value;
+          const insideLegLenght = measurementsArray[13].value;
+          const heightB = kneeHeight;
+          const heightA = backneckHeight - shoulderToElbow - insideLegLenght + kneeHeight;
+          const headHeight = fullHeight - insideLegLenght + kneeHeight;
+          const headsize = fullHeight - backneckHeight;
+          const heightC = headHeight - headsize * 3 / 10;
+          console.log(heightA, heightB, heightC)
+          res.status(200).send({deskHeight: heightA, chairHeight: heightB, topOfScreen: heightC})
+        })
       })
   } catch(err) {
     console.log(err)
