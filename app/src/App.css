@@ -5,8 +5,12 @@
 .main {
   min-height: calc(100vh - 50px - 100px);
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
+}
+
+.qr__code {
+  margin: 10px;
 }
 
 img {
