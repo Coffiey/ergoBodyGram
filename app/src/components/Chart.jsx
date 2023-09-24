@@ -6,23 +6,23 @@ const Chart = (props) => {
   
   return (
     <>
-      <table className="dimensions">
+     { userData && <table className="dimensions">
         <tr>
           <th colSpan="2">Dimensions</th>
         </tr>
         <tr>
           <td>A</td>
-          <td>{ userData.deskHeight + " cm"}</td>
+          <td>{ userData.deskHeightSit + " cm"}</td>
         </tr>
         <tr>
           <td>B</td>
-          <td>{ userData.chairHeight + " cm"}</td>
+          <td>{ userData.chairHeightSit + " cm"}</td>
         </tr>
         <tr>
           <td>C</td>
-          <td>{ userData.topOfScreen + " cm"}</td>
+          <td>{ userData.topOfScreenSit + " cm"}</td>
         </tr>
-      </table>
+      </table>}
     </>
   )
 }
