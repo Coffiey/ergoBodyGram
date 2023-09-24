@@ -5,7 +5,8 @@ const Header = () => {
   return (
     <>
       <header className="header">
-        <h1>ergoBodyGram</h1>
+        <h1>Painless Depression</h1>
+        <h5>Ergonomically Waste Your Life!</h5>
       </header>
     </>
   )

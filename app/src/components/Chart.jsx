@@ -7,21 +7,25 @@ const Chart = (props) => {
   return (
     <>
      { userData && <table className="dimensions">
-        <tr>
-          <th colSpan="2">Dimensions</th>
-        </tr>
-        <tr>
-          <td>A</td>
-          <td>{ userData.deskHeightSit + " cm"}</td>
-        </tr>
-        <tr>
-          <td>B</td>
-          <td>{ userData.chairHeightSit + " cm"}</td>
-        </tr>
-        <tr>
-          <td>C</td>
-          <td>{ userData.topOfScreenSit + " cm"}</td>
-        </tr>
+        <thead>
+          <tr>
+            <th colSpan="2">Dimensions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>A</td>
+            <td>{ Math.round(userData.deskHeightSit) + " cm"}</td>
+          </tr>
+          <tr>
+            <td>B</td>
+            <td>{ Math.round(userData.chairHeightSit) + " cm"}</td>
+          </tr>
+          <tr>
+            <td>C</td>
+            <td>{ Math.round(userData.topOfScreenSit) + " cm"}</td>
+          </tr>
+        </tbody>
       </table>}
     </>
   )
