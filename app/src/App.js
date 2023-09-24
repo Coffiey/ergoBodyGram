@@ -1,15 +1,18 @@
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Button from './components/Button';
 import Chart from './components/Chart';
 import ThreeIndex from './components/three/ThreeIndex';
+import QrCreate from './components/QrCreate';
+import Image from './components/Image';
+import PdfView from './components/pdf/PdfView';
 import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
-import QRCode from "react-qr-code";
+
 import { useState, useEffect } from 'react';
 
 function App() {
+  const currentUrl = window.location.pathname;
   
   const [input, setInput] = useState(null);
   const [qr, setQr] = useState(false);
@@ -20,6 +23,7 @@ function App() {
       // if (input) {
         try {
           // const URL = `api/get-measurements/${input}`
+          //test 
           const URL = `/api/get-measurements/myFirstScan`
           const userDataRequest = await axios.get(URL)
           console.log(userDataRequest.data)
@@ -53,23 +57,29 @@ func();
     }
   }
 
+  const handlePDF = () => {
+    window.location.href = window.open('/your-target-url', '_blank');
+  }
+
+  if (currentUrl === "/pdf") {
+    return (
+        <PdfView />
+    ) 
+  }
+
   return (
     <div className="App">
       <Header />
       <div className="main">
-        <img src="/ergonomic-desk-setup.png" alt="human figure sitting at desk with chair"></img>
+        <Image />
+        {/* <img src="/ergonomic-desk-setup.png" alt="human figure sitting at desk with chair"></img> */}
         <div>
-          {qr ? <div className="qr__code"><QRCode fgColor="#028579" value={qr}/></div> : <Button 
-            type="submit"
-            className="scan__button"
-            title="Click to scan your body"
-            text="Scan" 
-            onClick={handleSubmit}
-            />}
-          <Chart userData={userData}/>
+          <QrCreate qr={qr} handleSubmit={handleSubmit}/>
+          {/* <Chart userData={userData}/> */}
           </div>
       </div>
       {/* <ThreeIndex /> */}
+      <button onClick={handlePDF}>Generate PDF</button>
       <Footer />
       </div>
   );
