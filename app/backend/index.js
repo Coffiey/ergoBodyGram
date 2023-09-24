@@ -21,7 +21,7 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
     const url = `https://platform.bodygram.com/api/orgs/${ORG_ID}/scans`;
     console.log(url)
       const headers = {
-        'Authorization': process.env.API_KEY,
+        'Authorization': API_KEY,
       };
       fetch(url, {
         headers: headers,
@@ -40,6 +40,7 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
         .then(data => {
           const fullHeight = data.entry.input.photoScan.height;
           const measurementsArray = data.entry.measurements;
+          
           const outerArmLength = measurementsArray[21].value
           const kneeHeight = measurementsArray[16].value;
           const backneckHeight = measurementsArray[1].value;
@@ -67,10 +68,10 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
 
 app.post("/send-scan-data", (req, res) => {
   const data = req.body.data;
-  const url = `https://platform.bodygram.com/api/orgs/${process.env.ORG_ID}/scans`;
+  const url = `https://platform.bodygram.com/api/orgs/${ORG_ID}/scans`;
 
   const headers = {
-    'Authorization': process.env.API_KEY,
+    'Authorization': API_KEY,
   };
 
   fetch(url, {
@@ -86,10 +87,9 @@ app.post("/send-scan-data", (req, res) => {
 app.delete("/api/delete/:scanId", (req, res) => {
   const scanId = req.params.scanId;
   const headers = {
-    'Authorization': process.env.API_KEY,
+    'Authorization': API_KEY,
   };
-  console.log(scanId)
-  const url = `https://platform.bodygram.com/api/orgs/${process.env.ORG_ID}/scans`;
+  const url = `https://platform.bodygram.com/api/orgs/${ORG_ID}/scans`;
 
   try {
     fetch(url + "/" + scanId, {
