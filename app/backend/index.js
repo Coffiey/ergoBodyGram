@@ -9,7 +9,7 @@ const tokenController = require("./controller/tokenController")
 
 
 app.get("/", (req, res) => {
-  res.send("Hello World! test");S
+  res.send("Hello World! test");
 });
 
 app.get("/api/getToken", tokenController.getOneTimeToken)
@@ -81,6 +81,25 @@ app.post("/send-scan-data", (req, res) => {
   .then(() => {
     
   })
+})
+
+app.delete("/api/delete/:scanId", (req, res) => {
+  const scanId = req.params.scanId;
+  const headers = {
+    'Authorization': process.env.API_KEY,
+  };
+  console.log(scanId)
+  const url = `https://platform.bodygram.com/api/orgs/${process.env.ORG_ID}/scans`;
+
+  try {
+    fetch(url + "/" + scanId, {
+      method: "DELETE",
+      headers: headers
+    })
+    .then(() => res.send("scan correctly deleted"))
+  } catch(err) {
+    res.send("scan not found")
+  }
 })
 
 app.listen(PORT, () => {
