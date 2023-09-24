@@ -13,7 +13,7 @@ function App() {
   
   const [input, setInput] = useState(null);
   const [qr, setQr] = useState(false);
-  const [userData, setUserData] = useState();
+  const [userData, setUserData] = useState(null);
 
   useEffect(()=> {
     const func = async() => {
@@ -22,8 +22,8 @@ function App() {
           // const URL = `api/get-measurements/${input}`
           const URL = `/api/get-measurements/myFirstScan`
           const userDataRequest = await axios.get(URL)
-          setUserData(userDataRequest.data)
           console.log(userDataRequest.data)
+          setUserData(userDataRequest.data)
         } catch (err) {
           console.log("THERE WAS AN ERROR")
         }
@@ -66,7 +66,7 @@ func();
             text="Scan" 
             onClick={handleSubmit}
             />}
-          <Chart />
+          <Chart userData={userData}/>
           </div>
       </div>
       {/* <ThreeIndex /> */}

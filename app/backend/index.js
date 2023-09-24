@@ -30,7 +30,6 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
       .then(data => data.json())
       .then(result => {
         const filteredResult = result.results.filter(scan => scan.customScanId === customId);
-        console.log("😂",filteredResult[0])
         return filteredResult[0].id;
       })
       .then(scanId => {
