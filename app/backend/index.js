@@ -49,8 +49,10 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
           const headHeight = fullHeight - insideLegLenght + kneeHeight;
           const headsize = fullHeight - backneckHeight;
           const heightC = headHeight - headsize * 3 / 10;
+          const heightD = fullHeight - headsize - shoulderToElbow;
+          const heightE = fullHeight - headsize * 3 / 10;
           console.log(heightA, heightB, heightC)
-          res.status(200).send({deskHeight: heightA, chairHeight: heightB, topOfScreen: heightC})
+          res.status(200).send({deskHeightSit: heightA, chairHeightSit: heightB, topOfScreenSit: heightC, deskHeightStand: heightD, topOfScreenStand: heightE})
         })
       })
   } catch(err) {
