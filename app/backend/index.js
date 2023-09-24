@@ -9,7 +9,7 @@ const tokenController = require("./controller/tokenController")
 
 
 app.get("/", (req, res) => {
-  res.send("Hello World! test");S
+  res.send("Hello World! test");
 });
 
 app.get("/api/getToken", tokenController.getOneTimeToken)
@@ -40,9 +40,13 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
         .then(data => {
           const fullHeight = data.entry.input.photoScan.height;
           const measurementsArray = data.entry.measurements;
+          const outerArmLength = measurementsArray[21].value
           const kneeHeight = measurementsArray[16].value;
           const backneckHeight = measurementsArray[1].value;
-          const shoulderToElbow = measurementsArray[24].value;
+          const shoulderToElbow = Math.round(Math.cos(10 * Math.PI / 180) * measurementsArray[24].value);
+          const forearmLength = outerArmLength - shoulderToElbow
+          const bodyToElbow = Math.round(Math.sin(10 * Math.PI / 180) * measurementsArray[24].value);
+          const endOfKeys = forearmLength + bodyToElbow;
           const insideLegLenght = measurementsArray[13].value;
           const heightB = kneeHeight;
           const heightA = backneckHeight - shoulderToElbow - insideLegLenght + kneeHeight;
@@ -51,8 +55,9 @@ app.get("/api/get-measurements/:customId", async (req, res) => {
           const heightC = headHeight - headsize * 3 / 10;
           const heightD = fullHeight - headsize - shoulderToElbow;
           const heightE = fullHeight - headsize * 3 / 10;
-          console.log(heightA, heightB, heightC)
-          res.status(200).send({deskHeightSit: heightA, chairHeightSit: heightB, topOfScreenSit: heightC, deskHeightStand: heightD, topOfScreenStand: heightE})
+
+          console.log(measurementsArray[24].value, measurementsArray[24].name, shoulderToElbow, bodyToElbow);
+          res.status(200).send({deskHeightSit: heightA, chairHeightSit: heightB, topOfScreenSit: heightC, deskHeightStand: heightD, topOfScreenStand: heightE, endOfKeyboards: endOfKeys, scan_id: scanId})
         })
       })
   } catch(err) {
@@ -76,6 +81,25 @@ app.post("/send-scan-data", (req, res) => {
   .then(() => {
     
   })
+})
+
+app.delete("/api/delete/:scanId", (req, res) => {
+  const scanId = req.params.scanId;
+  const headers = {
+    'Authorization': process.env.API_KEY,
+  };
+  console.log(scanId)
+  const url = `https://platform.bodygram.com/api/orgs/${process.env.ORG_ID}/scans`;
+
+  try {
+    fetch(url + "/" + scanId, {
+      method: "DELETE",
+      headers: headers
+    })
+    .then(() => res.send("scan correctly deleted"))
+  } catch(err) {
+    res.send("scan not found")
+  }
 })
 
 app.listen(PORT, () => {
