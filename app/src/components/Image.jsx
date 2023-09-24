@@ -1,13 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import "../styles/Image.css";
 
 const Image = () => {
   const [sitting, setSitting] = useState(true);
-  const [standing, setStanding] = useState(false);
+  const [buttonText, setButtonText] = useState("");
+
+  const handleImageDisplay = () => {
+    if (sitting) {
+      setSitting(false);
+    } else {
+      setSitting(true);
+    }
+  }
+
+  const handleButtonText = () => {
+    if (sitting) {
+      setButtonText("Sitting");
+    } else {
+      setButtonText("Standing");
+    }
+  }
+
+  useEffect(() => {
+    handleButtonText();
+  }, [sitting])
 
   return (
     <>
-      
-      <img src="/ergonomic-desk-setup.png" alt="human figure sitting at desk with chair"></img>
+    <button onClick={handleImageDisplay}>{ buttonText }</button>
+    { sitting 
+      ? <img src="/sitting.png" alt="human figure sitting at desk with chair"></img>
+      : <img src="/standing.png" alt="human figure sitting at desk with chair"></img>
+    }
     </>
   )
 }

@@ -2,7 +2,7 @@ import React from "react";
 import "../styles/Chart.css";
 
 const Chart = (props) => {
-  const {userData} = props
+  const { userData } = props
   
   return (
     <>
