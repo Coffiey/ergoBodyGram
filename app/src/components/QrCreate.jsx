@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import "../styles/Header.css";
+import "../styles/Button.css";
 import Button from "./Button"
 import QRCode from "react-qr-code";
 
 const QrCreate = (props) => {
-    const {qr, handleSubmit} = props
-    const [qrCode, setQrCode] = useState(false);
+    const {qr, handleSubmit, setToggle} = props
 
   return (
     <>
@@ -13,7 +12,7 @@ const QrCreate = (props) => {
       <div className="qr__code">
         <h3>Scan Me</h3>
         <QRCode fgColor="#028579" value={qr}/>
-        <p>I've already made a scan</p>
+        <p onClick={setToggle}>I've already made a scan</p>
       </div> 
       :
        <Button 

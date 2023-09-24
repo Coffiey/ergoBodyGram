@@ -8,3 +8,8 @@
   background-color: #028579;
   color: white;
 }
+
+p:hover {
+  color: blue;
+  text-decoration: underline;
+}

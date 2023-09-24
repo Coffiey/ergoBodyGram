@@ -1,15 +1,15 @@
 import React from "react";
 import "../styles/Chart.css";
 
-const Chart = (props) => {
-  const { userData } = props
+const SittingChart = (props) => {
+  const { userData, className, handleDelete } = props
   
-  return (
-    <>
+ return (
+    <div className={className}>
      { userData && <table className="dimensions">
         <thead>
           <tr>
-            <th colSpan="2">Dimensions</th>
+            <th colSpan="2">Sitting Dimensions</th>
           </tr>
         </thead>
         <tbody>
@@ -25,10 +25,15 @@ const Chart = (props) => {
             <td>C</td>
             <td>{ Math.round(userData.topOfScreenSit) + " cm"}</td>
           </tr>
+          <tr>
+            <td>D</td>
+            <td>{ Math.round(userData.endOfKeyboards) + " cm"}</td>
+          </tr>
         </tbody>
       </table>}
-    </>
+      <p onClick={handleDelete}>Make a New Scan? This will delete the current one.</p>
+    </div>
   )
 }
 
-export default Chart;
+export default SittingChart;

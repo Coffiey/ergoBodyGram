@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import Chart from './components/Chart';
+import SittingChart from './components/SittingChart';
 import ThreeIndex from './components/three/ThreeIndex';
 import QrCreate from './components/QrCreate';
 import Image from './components/Image';
@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from "axios";
 
 import { useState, useEffect } from 'react';
+import StandingChart from './components/StandingChart';
 
 function App() {
   const currentUrl = window.location.pathname;
@@ -17,7 +18,9 @@ function App() {
   const [input, setInput] = useState(null);
   const [qr, setQr] = useState(false);
   const [userData, setUserData] = useState(null);
-
+  const [sitting, setSitting] = useState(true);
+  const [toggle, setToggle] = useState(true)
+  
   useEffect(()=> {
     const func = async() => {
       // if (input) {
@@ -34,7 +37,7 @@ function App() {
       // }
     }
 func();
-  }, [])
+  }, [toggle])
   
   const handleSubmit = async () => {
     try {
@@ -58,28 +61,45 @@ func();
   }
 
   const handlePDF = () => {
-    window.location.href = window.open('/your-target-url', '_blank');
+    if (userData) {
+      window.location.href = window.open('/pdf', '_blank');
+    }
   }
 
   if (currentUrl === "/pdf") {
-    return (
-        <PdfView />
-    ) 
+      return (
+        <PdfView userData={userData}/>
+    )
+  }
+
+  const handleDelete = async() => {
+    const URL = `api/delete/${userData.scan_id}`;
+    const QRURL = await axios.delete(URL);
+    setUserData(null)
+    console.log(QRURL)
+    localStorage.removeItem('ergoBodyGram');
   }
 
   return (
     <div className="App">
       <Header />
       <div className="main">
-        <Image />
-        {/* <img src="/ergonomic-desk-setup.png" alt="human figure sitting at desk with chair"></img> */}
-        <div>
-          <QrCreate qr={qr} handleSubmit={handleSubmit}/>
-          {/* <Chart userData={userData}/> */}
-          </div>
+        <Image sitting={sitting} setSitting={setSitting}/>
+        <div className="scan">
+          {!userData && <QrCreate setToggle={setToggle} qr={qr} handleSubmit={handleSubmit}/>}
+        </div>
+        <div className="chart">
+          {userData && <>
+          { sitting
+            ? <SittingChart onClick={handleDelete} userData={userData}/>
+            : <StandingChart onClick={handleDelete} userData={userData}/>
+          }
+          </>
+          }
+        </div>
       </div>
       {/* <ThreeIndex /> */}
-      <button onClick={handlePDF}>Generate PDF</button>
+      {userData && <button onClick={handlePDF}>Generate PDF</button>}
       <Footer />
       </div>
   );

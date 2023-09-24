@@ -1,3 +1,12 @@
+.image {
+  width: 40%
+}
+
 img {
-  width: 50%
+  width: 95%;
+}
+
+.image__toggle {
+  padding: 3px;
+  margin-top: 10px;
 }

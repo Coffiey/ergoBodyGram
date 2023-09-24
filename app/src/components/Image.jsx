@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../styles/Image.css";
 
-const Image = () => {
-  const [sitting, setSitting] = useState(true);
-  const [buttonText, setButtonText] = useState("");
+const Image = (props) => {
+  const {sitting, setSitting} = props;
+  const [buttonText, setButtonText] = useState("Sitting");
 
   const handleImageDisplay = () => {
     if (sitting) {
@@ -15,9 +15,9 @@ const Image = () => {
 
   const handleButtonText = () => {
     if (sitting) {
-      setButtonText("Sitting");
+      setButtonText("Standing Dimensions");
     } else {
-      setButtonText("Standing");
+      setButtonText("Sitting Dimensions");
     }
   }
 
@@ -26,13 +26,13 @@ const Image = () => {
   }, [sitting])
 
   return (
-    <>
-    <button onClick={handleImageDisplay}>{ buttonText }</button>
-    { sitting 
-      ? <img src="/sitting.png" alt="human figure sitting at desk with chair"></img>
-      : <img src="/standing.png" alt="human figure sitting at desk with chair"></img>
-    }
-    </>
+    <div className="image">
+      <button className="image__toggle" onClick={handleImageDisplay}>{ buttonText }</button>
+      { sitting 
+        ? <img src="/sitting.png" alt="human figure sitting at desk with chair"></img>
+        : <img src="/standing.png" alt="human figure sitting at desk with chair"></img>
+      }
+    </div>
   )
 }
 

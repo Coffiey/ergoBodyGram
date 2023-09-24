@@ -9,11 +9,11 @@
   align-items: center;
 }
 
-.qr__code {
-  margin: 10px;
+.scan {
+  width: 40%;
 }
 
-img {
-  width: 50%
+.qr__code {
+  margin: 10px;
 }
 
